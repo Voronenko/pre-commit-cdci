@@ -8,3 +8,11 @@ $ cat .pre-commit-config.yaml
   hooks:
     - id: circleci_validate
 ```
+
+```bash
+$ cat .pre-commit-config.yaml
+- repo: https://github.com/voronenko/pre-commit-cdci.git
+  rev: master # get latest tag from release tab
+  hooks:
+    - id: gitlab_validate
+```
