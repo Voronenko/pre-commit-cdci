@@ -3,3 +3,9 @@
   description: This hook validate CircleCI config 
   entry: circleci_validate.sh
   language: script
+- id: gitlabci_validate
+  name: Validate GitlabCI config
+  description: This hook validate GitlabCI config
+  entry: gitlabci_validate.sh
+  language: script
+
