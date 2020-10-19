@@ -7,6 +7,12 @@ then
     exit
 fi
 
+if [ -z "$GITHUB_TOKEN" ]
+then
+      echo "\$GITHUB_TOKEN is not set, required by local circleci to run check"
+      exit
+fi
+
 if ! eMSG=$(circleci config validate -c .circleci/config.yml); then
 	echo "CircleCI Configuration Failed Validation."
 	echo $eMSG
