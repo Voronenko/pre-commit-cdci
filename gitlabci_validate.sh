@@ -13,8 +13,12 @@ then
     exit
 fi
 
-DATA=$(jq --null-input --arg yaml "$(<.gitlab-ci.yml)" '.content=$yaml')
-RESPONSE=S(curl -s --header "Content-Type: application/json" https://gitlab.com/api/v4/ci/lint --data $DATA)
+CONTENT="$(<.gitlab-ci.yml)"
+
+RESPONSE=$(jq --null-input --arg yaml "$CONTENT" '.content=$yaml' \
+| curl -s 'https://gitlab.com/api/v4/ci/lint?include_merged_yaml=false' \
+--header 'Content-Type: application/json' \
+--data @-)
 
 if echo "$RESPONSE" | grep 'invalid'; then
   echo ".gitlab-ci configuration is invalid"
