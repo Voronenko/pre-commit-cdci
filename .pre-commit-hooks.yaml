@@ -10,4 +10,10 @@
   entry: gitlabci_validate.sh
   language: script
   files: ^.gitlab-ci.yml$
-
+- id: helmlint
+  name: helmlint
+  description: Run helm lint, a linter for helm charts
+  entry: helmlint.sh
+  language: script
+  files: \.((ya?ml)|(tpl))$
+  require_serial: true
