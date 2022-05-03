@@ -17,6 +17,7 @@ CONTENT="$(<.gitlab-ci.yml)"
 
 RESPONSE=$(jq --null-input --arg yaml "$CONTENT" '.content=$yaml' \
 | curl -s 'https://gitlab.com/api/v4/ci/lint?include_merged_yaml=false' \
+--header "PRIVATE-TOKEN: ${PRIVATE_GITLAB_TOKEN}" \
 --header 'Content-Type: application/json' \
 --data @-)
 
@@ -26,3 +27,7 @@ if echo "$RESPONSE" | grep 'invalid'; then
   exit 1
 fi
 
+if echo "$RESPONSE" | grep 'unauthorized'; then
+  echo "Failed to validate, check private token environment variable PRIVATE_GITLAB_TOKEN"
+  echo $RESPONSE | jq
+fi
